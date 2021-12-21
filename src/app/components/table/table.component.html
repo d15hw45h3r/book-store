@@ -1,0 +1,49 @@
+<input
+  type="text"
+  name="search"
+  placeholder="Search"
+  [(ngModel)]="searchText"
+  class="search-filter"
+/>
+
+<table>
+  <thead>
+    <th>#</th>
+    <th></th>
+    <th (click)="sortColumns('TITLE')">Title</th>
+    <th (click)="sortColumns('PRICE')">Price</th>
+    <th>Add to cart</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books | searchFilter: searchText; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td class="table-img">
+        <a
+          [title]="book.title + ' details'"
+          [routerLink]="['/books', book.isbn13]"
+        >
+          <img src="{{ book.image }}" />
+        </a>
+      </td>
+      <td>
+        <a
+          [title]="book.title + ' details'"
+          [routerLink]="['/books', book.isbn13]"
+        >
+          {{ book.title }}
+          <span>{{ book.subtitle }}</span>
+        </a>
+      </td>
+      <td>{{ book.price }}</td>
+      <td>
+        <button
+          class="btn-add"
+          (click)="addToCart(book)"
+          [disabled]="book.added"
+        >
+          {{ book.added ? "Added" : "+" }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
